@@ -1,0 +1,17 @@
+.filter__wrapper {
+    display: flex;
+    /* flex-wrap: nowrap; */
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.search__input {
+    height: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    width: 300px;
+}

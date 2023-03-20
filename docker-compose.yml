@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:
+  redis:
+    image: 'redis:6.2'
+    ports:
+      - '6379:6379'
+
+  db:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Optionally, you can include the following line to map a local directory (e.g., './mysql-data') instead of using a named volume.
+      # - ./mysql-data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+
+  backend:
+    build: ./backend
+    ports:
+      - '5000:5000'
+    depends_on:
+      - redis
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DB=members_data
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:8080'
+    depends_on:
+      - backend
+volumes:
+  mysql_data:

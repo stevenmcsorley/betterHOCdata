@@ -1,0 +1,8 @@
+requests
+redis
+Flask
+Flask-Caching
+APScheduler
+pymysql
+mysql-connector-python
+flask-cors
